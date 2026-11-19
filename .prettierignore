@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# WXT
+.wxt/
+.output/
+
+# Builds
+dist/
+coverage/
+
+# Lockfiles
+bun.lock
+package-lock.json
+
+# Logs
+*.log
+
+# Generated files
+*.tsbuildinfo
