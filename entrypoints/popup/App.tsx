@@ -1,32 +1,32 @@
-import wxtLogo from '/wxt.svg';
-import { useState } from 'react';
-
-import reactLogo from '@/assets/react.svg';
+import { PopupHeader } from './components/PopupHeader';
 
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://wxt.dev" target="_blank">
-          <img src={wxtLogo} className="logo" alt="WXT logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>WXT + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the WXT and React logos to learn more</p>
-    </>
+    <div className="popup">
+      <PopupHeader />
+
+      <main className="popup-content">
+        <section className="popup-section">
+          <h2 className="popup-section__title">Sitio web actual</h2>
+
+          <div className="popup-placeholder">
+            <p className="popup-placeholder__title">Tu navegación, más protegida.</p>
+
+            <p className="popup-placeholder__description">
+              Aquí podrás analizar la URL de la pestaña actual y comprobar si presenta señales de
+              phishing.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer className="popup-footer">
+        <span>Powered by PhishGuard AI</span>
+        <span>v0.1.0</span>
+      </footer>
+    </div>
   );
 }
 

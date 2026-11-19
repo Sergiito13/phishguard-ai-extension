@@ -1,0 +1,50 @@
+:root {
+  /* Backgrounds */
+  --bg-primary: #071c1c;
+  --bg-secondary: #0c2827;
+  --bg-card: #123331;
+
+  /* Brand */
+  --brand-primary: #87e9d0;
+  --brand-light: #a6fae3;
+  --brand-dark: #42c6ad;
+
+  /* Text */
+  --text-primary: #f3fbf9;
+  --text-secondary: #a0b9b3;
+  --text-muted: #6e918a;
+
+  /* Borders */
+  --border-default: rgba(135, 233, 208, 0.12);
+  --border-hover: rgba(135, 233, 208, 0.24);
+
+  /* Glass */
+  --glass-background: rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(255, 255, 255, 0.09);
+
+  /* Status */
+  --status-safe: #87e9d0;
+  --status-warning: #f5ba63;
+  --status-danger: #f17c84;
+  --status-neutral: #a0b9b3;
+
+  /* Typography */
+  --font-primary: 'Geist Sans', sans-serif;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* Popup */
+  --popup-width: 380px;
+}
