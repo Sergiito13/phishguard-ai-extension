@@ -1,4 +1,5 @@
 import { PopupHeader } from './components/PopupHeader';
+import { CurrentWebsite } from './components/CurrentWebsite';
 
 import './App.css';
 
@@ -11,12 +12,14 @@ function App() {
         <section className="popup-section">
           <h2 className="popup-section__title">Sitio web actual</h2>
 
+          <CurrentWebsite />
+
           <div className="popup-placeholder">
-            <p className="popup-placeholder__title">Tu navegación, más protegida.</p>
+            <p className="popup-placeholder__title">Pendiente de análisis</p>
 
             <p className="popup-placeholder__description">
-              Aquí podrás analizar la URL de la pestaña actual y comprobar si presenta señales de
-              phishing.
+              Esta página todavía no ha sido analizada. Próximamente podrás comprobar si presenta
+              señales de phishing.
             </p>
           </div>
         </section>
