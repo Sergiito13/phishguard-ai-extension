@@ -19,6 +19,8 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "@fontsource/geist-sans": "^5.3.0",
+    "iconoir-react": "^7.12.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
