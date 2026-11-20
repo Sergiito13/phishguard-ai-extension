@@ -1,5 +1,7 @@
 import { PopupHeader } from './components/PopupHeader';
 import { CurrentWebsite } from './components/CurrentWebsite';
+import { ScanStatus } from './components/ScanStatus';
+import { ScanButton } from './components/ScanButton';
 
 import './App.css';
 
@@ -14,14 +16,9 @@ function App() {
 
           <CurrentWebsite />
 
-          <div className="popup-placeholder">
-            <p className="popup-placeholder__title">Pendiente de análisis</p>
+          <ScanStatus status="idle" />
 
-            <p className="popup-placeholder__description">
-              Esta página todavía no ha sido analizada. Próximamente podrás comprobar si presenta
-              señales de phishing.
-            </p>
-          </div>
+          <ScanButton />
         </section>
       </main>
 
