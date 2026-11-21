@@ -7,8 +7,8 @@
   flex-direction: column;
 
   width: 100%;
-  min-height: 440px;
-  padding: 24px;
+  min-height: 0;
+  padding: 16px 20px;
 
   background:
     radial-gradient(ellipse at 85% 0%, rgba(66, 198, 173, 0.08), transparent 55%), var(--bg-primary);
@@ -22,16 +22,16 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 
-  padding-bottom: 24px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--border-default);
 }
 
 .popup-header__brand {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 
   min-width: 0;
 }
@@ -39,7 +39,7 @@
 .popup-header__logo {
   display: block;
 
-  width: 185px;
+  width: 175px;
   max-width: 100%;
   height: auto;
 }
@@ -59,14 +59,23 @@
   justify-content: center;
   flex-shrink: 0;
 
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
 
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
 
   background: var(--glass-background);
   color: var(--text-secondary);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.popup-header__settings:hover:not(:disabled) {
+  background: rgba(135, 233, 208, 0.08);
+  border-color: var(--border-hover);
 }
 
 .popup-header__settings:disabled {
@@ -80,11 +89,16 @@
 
 .popup-content {
   flex: 1;
-  padding-top: 28px;
+  padding-top: 18px;
+}
+
+.popup-section {
+  display: flex;
+  flex-direction: column;
 }
 
 .popup-section__title {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
 
   color: var(--text-secondary);
   font-size: 11px;
@@ -100,16 +114,20 @@
 .current-website {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 
   width: 100%;
-  min-height: 70px;
-  padding: 14px;
+  min-height: 60px;
+  padding: 10px 12px;
 
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
 
   background: var(--glass-background);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .current-website__icon {
@@ -118,8 +136,8 @@
   justify-content: center;
   flex-shrink: 0;
 
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
 
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
@@ -140,8 +158,9 @@
   overflow: hidden;
 
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
+  line-height: 1.4;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -157,11 +176,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 
   width: 100%;
-  margin-top: 20px;
-  padding: 28px 20px;
+  margin-top: 14px;
+  padding: 18px 16px;
 
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
@@ -173,32 +192,42 @@
   text-align: center;
 }
 
-/* Scan Icon */
+/* ==========================================
+   SCAN STATUS — ICON
+   ========================================== */
 
 .scan-status__icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
-  width: 68px;
-  height: 68px;
+  width: 54px;
+  height: 54px;
 
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
 
   background: rgba(135, 233, 208, 0.06);
   color: var(--scan-accent);
 }
 
-/* Scan Badge */
+.scan-status__icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+/* ==========================================
+   SCAN STATUS — BADGE
+   ========================================== */
 
 .scan-status__badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 8px;
 
-  padding: 8px 14px;
+  padding: 7px 12px;
 
   border: 1px solid var(--border-default);
   border-radius: 999px;
@@ -217,35 +246,38 @@
 
 .scan-status__title {
   color: var(--text-primary);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
+  line-height: 1.4;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-/* Scan Description */
+/* ==========================================
+   SCAN STATUS — DESCRIPTION
+   ========================================== */
 
 .scan-status__description {
-  max-width: 280px;
+  max-width: 275px;
   margin: 0;
 
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 /* ==========================================
-   SCAN STATUS — VARIANTS
+   SCAN STATUS — IDLE
    ========================================== */
-
-/* Idle */
 
 .scan-status--idle {
   --scan-accent: var(--status-neutral);
 }
 
-/* Scanning */
+/* ==========================================
+   SCAN STATUS — SCANNING
+   ========================================== */
 
 .scan-status--scanning {
   --scan-accent: var(--brand-primary);
@@ -255,7 +287,13 @@
   animation: scan-pulse 1.5s ease-in-out infinite;
 }
 
-/* Safe */
+.scan-status--scanning .scan-status__icon {
+  border-color: var(--border-hover);
+}
+
+/* ==========================================
+   SCAN STATUS — SAFE
+   ========================================== */
 
 .scan-status--safe {
   --scan-accent: var(--status-safe);
@@ -265,13 +303,20 @@
   background: rgba(135, 233, 208, 0.08);
 }
 
-/* Suspicious */
+.scan-status--safe .scan-status__badge {
+  border-color: rgba(135, 233, 208, 0.2);
+}
+
+/* ==========================================
+   SCAN STATUS — SUSPICIOUS
+   ========================================== */
 
 .scan-status--suspicious {
   --scan-accent: var(--status-danger);
 }
 
 .scan-status--suspicious .scan-status__icon {
+  border-color: rgba(241, 124, 132, 0.2);
   background: rgba(241, 124, 132, 0.08);
 }
 
@@ -280,13 +325,16 @@
   background: rgba(241, 124, 132, 0.06);
 }
 
-/* Error */
+/* ==========================================
+   SCAN STATUS — ERROR
+   ========================================== */
 
 .scan-status--error {
   --scan-accent: var(--status-warning);
 }
 
 .scan-status--error .scan-status__icon {
+  border-color: rgba(245, 186, 99, 0.2);
   background: rgba(245, 186, 99, 0.08);
 }
 
@@ -306,9 +354,9 @@
   gap: 10px;
 
   width: 100%;
-  min-height: 48px;
-  margin-top: 20px;
-  padding: 12px 20px;
+  min-height: 44px;
+  margin-top: 14px;
+  padding: 10px 16px;
 
   border: 1px solid transparent;
   border-radius: var(--radius-md);
@@ -326,6 +374,10 @@
     background 0.2s ease,
     border-color 0.2s ease,
     opacity 0.2s ease;
+}
+
+.scan-button svg {
+  flex-shrink: 0;
 }
 
 /* Hover */
@@ -354,6 +406,27 @@
 }
 
 /* ==========================================
+   FOOTER
+   ========================================== */
+
+.popup-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 18px;
+  padding-top: 12px;
+
+  border-top: 1px solid var(--border-default);
+
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ==========================================
    ANIMATIONS
    ========================================== */
 
@@ -368,33 +441,19 @@
   }
 }
 
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .scan-status__indicator,
   .scan-button__loading-icon {
     animation: none;
   }
 
-  .scan-button {
+  .scan-button,
+  .popup-header__settings,
+  .current-website {
     transition: none;
   }
-}
-
-/* ==========================================
-   FOOTER
-   ========================================== */
-
-.popup-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-
-  margin-top: 28px;
-  padding-top: 18px;
-
-  border-top: 1px solid var(--border-default);
-
-  color: var(--text-muted);
-  font-size: 10px;
-  font-weight: 400;
 }
