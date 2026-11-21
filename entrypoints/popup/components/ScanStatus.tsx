@@ -6,13 +6,21 @@ import {
   InfoCircle,
 } from 'iconoir-react';
 
-export type ScanStatusType = 'idle' | 'scanning' | 'safe' | 'suspicious' | 'error';
+export type ScanStatusType =
+  'loading' | 'idle' | 'scanning' | 'safe' | 'suspicious' | 'error' | 'unavailable';
 
 interface ScanStatusProps {
   status: ScanStatusType;
+  description?: string;
 }
 
 const statusConfig = {
+  loading: {
+    icon: InfoCircle,
+    title: 'Comprobando página',
+    description: 'Estamos obteniendo la información de la pestaña activa.',
+  },
+
   idle: {
     icon: ShieldQuestion,
     title: 'No analizado',
@@ -44,9 +52,16 @@ const statusConfig = {
     title: 'Error de análisis',
     description: 'No se ha podido completar el análisis de esta URL. Inténtalo nuevamente.',
   },
+
+  unavailable: {
+    icon: InfoCircle,
+    title: 'No disponible',
+    description:
+      'Esta página no puede analizarse. PhishGuard AI solo admite direcciones HTTP y HTTPS.',
+  },
 };
 
-export function ScanStatus({ status }: ScanStatusProps) {
+export function ScanStatus({ status, description }: ScanStatusProps) {
   const config = statusConfig[status];
   const Icon = config.icon;
 
@@ -58,10 +73,11 @@ export function ScanStatus({ status }: ScanStatusProps) {
 
       <div className="scan-status__badge">
         <span className="scan-status__indicator" />
+
         <span className="scan-status__title">{config.title}</span>
       </div>
 
-      <p className="scan-status__description">{config.description}</p>
+      <p className="scan-status__description">{description ?? config.description}</p>
     </section>
   );
 }

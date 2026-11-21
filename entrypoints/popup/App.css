@@ -457,3 +457,39 @@
     transition: none;
   }
 }
+
+/* ==========================================
+   SCAN STATUS — LOADING
+   ========================================== */
+
+.scan-status--loading {
+  --scan-accent: var(--status-neutral);
+}
+
+.scan-status--loading .scan-status__indicator {
+  animation: scan-pulse 1.5s ease-in-out infinite;
+}
+
+/* ==========================================
+   SCAN STATUS — UNAVAILABLE
+   ========================================== */
+
+.scan-status--unavailable {
+  --scan-accent: var(--status-neutral);
+}
+
+.scan-status--unavailable .scan-status__icon {
+  border-color: var(--glass-border);
+  background: rgba(160, 185, 179, 0.06);
+}
+
+.scan-status--unavailable .scan-status__badge {
+  border-color: var(--glass-border);
+  background: rgba(160, 185, 179, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-status--loading .scan-status__indicator {
+    animation: none;
+  }
+}

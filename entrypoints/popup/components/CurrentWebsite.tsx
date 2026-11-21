@@ -1,74 +1,12 @@
-import { useEffect, useState } from 'react';
 import { Globe } from 'iconoir-react';
-import { browser } from 'wxt/browser';
 
-type WebsiteState =
-  | { status: 'loading' }
-  | { status: 'ready'; hostname: string }
-  | { status: 'unavailable'; message: string };
+import type { ActiveTabState } from '../hooks/useActiveTab';
 
-export function CurrentWebsite() {
-  const [website, setWebsite] = useState<WebsiteState>({
-    status: 'loading',
-  });
+interface CurrentWebsiteProps {
+  website: ActiveTabState;
+}
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadCurrentWebsite() {
-      try {
-        const [tab] = await browser.tabs.query({
-          active: true,
-          currentWindow: true,
-        });
-
-        if (!tab?.url) {
-          if (!cancelled) {
-            setWebsite({
-              status: 'unavailable',
-              message: 'No se pudo obtener la URL',
-            });
-          }
-
-          return;
-        }
-
-        const url = new URL(tab.url);
-
-        if (url.protocol !== 'http:' && url.protocol !== 'https:') {
-          if (!cancelled) {
-            setWebsite({
-              status: 'unavailable',
-              message: 'Página no compatible',
-            });
-          }
-
-          return;
-        }
-
-        if (!cancelled) {
-          setWebsite({
-            status: 'ready',
-            hostname: url.hostname,
-          });
-        }
-      } catch {
-        if (!cancelled) {
-          setWebsite({
-            status: 'unavailable',
-            message: 'No se pudo leer la página',
-          });
-        }
-      }
-    }
-
-    void loadCurrentWebsite();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+export function CurrentWebsite({ website }: CurrentWebsiteProps) {
   const hostname =
     website.status === 'ready'
       ? website.hostname

@@ -3,11 +3,23 @@ import { Play, ShieldLoading } from 'iconoir-react';
 interface ScanButtonProps {
   onScan?: () => void;
   disabled?: boolean;
+  disabledReason?: string;
   isScanning?: boolean;
 }
 
-export function ScanButton({ onScan, disabled = false, isScanning = false }: ScanButtonProps) {
+export function ScanButton({
+  onScan,
+  disabled = false,
+  disabledReason,
+  isScanning = false,
+}: ScanButtonProps) {
   const isDisabled = disabled || isScanning || !onScan;
+
+  const buttonTitle = disabled
+    ? (disabledReason ?? 'Esta página no se puede analizar')
+    : !onScan
+      ? 'Disponible cuando conectemos el motor de análisis'
+      : undefined;
 
   return (
     <button
@@ -16,7 +28,7 @@ export function ScanButton({ onScan, disabled = false, isScanning = false }: Sca
       onClick={onScan}
       disabled={isDisabled}
       aria-busy={isScanning}
-      title={!onScan ? 'Disponible cuando conectemos el motor de análisis' : undefined}
+      title={buttonTitle}
     >
       {isScanning ? (
         <ShieldLoading
