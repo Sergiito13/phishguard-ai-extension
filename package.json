@@ -19,6 +19,8 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "@fontsource/geist-sans": "^5.3.0",
+    "iconoir-react": "^7.12.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
@@ -26,6 +28,7 @@
     "@eslint/js": "^10.0.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@wxt-dev/auto-icons": "^1.1.2",
     "@wxt-dev/module-react": "^1.1.5",
     "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
