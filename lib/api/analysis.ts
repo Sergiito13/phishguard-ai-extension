@@ -4,60 +4,129 @@
 
 import type { AnalysisRequest, AnalysisResponse } from '../../types/analysis';
 
-// Local FastAPI server
+// ==========================================
+// API CONFIGURATION
+// ==========================================
+
+// Local development API
 const API_BASE_URL = 'http://127.0.0.1:8000/api/v1';
 
+// ==========================================
+// URL ANALYSIS
+// ==========================================
+
 /**
- * Analyze a URL using the PhishGuard AI backend.
+ * Analyze a website using the PhishGuard AI backend.
  *
- * The backend extracts URL features and performs
- * a prediction using the experimental ML model.
+ * For privacy, only the URL origin is transmitted.
+ * Paths, query parameters, fragments and credentials
+ * are excluded from the request.
  *
  * @param url URL to analyze
  * @param signal Optional AbortSignal
  * @returns Analysis response from FastAPI
  */
 export async function analyzeUrl(url: string, signal?: AbortSignal): Promise<AnalysisResponse> {
-  // Validate the URL
+  // ==========================================
+  // 1. VALIDATE URL
+  // ==========================================
+
   const parsedUrl = new URL(url);
 
-  if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+  const isSupportedProtocol = parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+
+  if (!isSupportedProtocol) {
     throw new Error('Solo se pueden analizar direcciones HTTP y HTTPS.');
   }
 
-  // Build request
+  // ==========================================
+  // 2. SANITIZE URL
+  // ==========================================
+
+  // Only send the website origin.
+  // Exclude paths, query parameters, fragments
+  // and credentials to protect sensitive data.
+
+  const sanitizedUrl = `${parsedUrl.origin}/`;
+
+  // ==========================================
+  // 3. BUILD REQUEST
+  // ==========================================
+
   const request: AnalysisRequest = {
-    url,
+    url: sanitizedUrl,
   };
 
-  // Send request to FastAPI
-  const response = await fetch(`${API_BASE_URL}/analyze`, {
-    method: 'POST',
+  // ==========================================
+  // 4. EXECUTE HTTP REQUEST
+  // ==========================================
 
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  let response: Response;
 
-    body: JSON.stringify(request),
+  try {
+    response = await fetch(`${API_BASE_URL}/analyze`, {
+      method: 'POST',
 
-    signal,
-  });
+      headers: {
+        'Content-Type': 'application/json',
+      },
 
-  // Handle HTTP errors
-  if (!response.ok) {
-    if (response.status === 422) {
-      throw new Error('La URL proporcionada no es válida.');
+      body: JSON.stringify(request),
+
+      signal,
+    });
+  } catch (error) {
+    // Preserve cancellation errors
+    if (signal?.aborted) {
+      throw error;
     }
 
-    if (response.status === 503) {
-      throw new Error('El modelo de análisis no está disponible.');
-    }
-
-    throw new Error(`No se pudo completar el análisis. HTTP ${response.status}`);
+    // Preserve the original error cause
+    throw new Error(
+      'No se puede conectar con FastAPI. Comprueba que el servidor está funcionando.',
+      {
+        cause: error,
+      },
+    );
   }
 
-  // Parse response
+  // ==========================================
+  // 5. HANDLE HTTP ERRORS
+  // ==========================================
+
+  if (!response.ok) {
+    switch (response.status) {
+      case 422:
+        throw new Error('La dirección proporcionada no es válida.');
+
+      case 503:
+        throw new Error('El modelo de análisis no está disponible.');
+
+      default:
+        throw new Error(`No se pudo completar el análisis. Error HTTP ${response.status}.`);
+    }
+  }
+
+  // ==========================================
+  // 6. PARSE API RESPONSE
+  // ==========================================
+
   const result: AnalysisResponse = await response.json();
+
+  // ==========================================
+  // 7. VALIDATE PREDICTION
+  // ==========================================
+
+  const isValidPrediction =
+    result.prediction === 'not_flagged' || result.prediction === 'potential_phishing';
+
+  if (!isValidPrediction) {
+    throw new Error('El servidor ha devuelto una predicción no reconocida.');
+  }
+
+  // ==========================================
+  // 8. RETURN RESULT
+  // ==========================================
 
   return result;
 }

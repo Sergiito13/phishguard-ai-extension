@@ -4,23 +4,65 @@ import { ScanStatus } from './components/ScanStatus';
 import { ScanButton } from './components/ScanButton';
 
 import { useActiveTab } from './hooks/useActiveTab';
+import { useUrlAnalysis } from './hooks/useUrlAnalysis';
 
 import type { ScanStatusType } from './components/ScanStatus';
 
 import './App.css';
 
 function App() {
+  // ==========================================
+  // HOOKS
+  // ==========================================
+
   const website = useActiveTab();
 
-  const scanStatus: ScanStatusType =
-    website.status === 'loading' ? 'loading' : website.status === 'ready' ? 'idle' : 'unavailable';
+  const { state: analysis, analyze } = useUrlAnalysis();
+
+  // ==========================================
+  // WEBSITE STATE
+  // ==========================================
 
   const isWebsiteAvailable = website.status === 'ready';
 
-  const unavailableDescription =
-    website.status === 'unavailable' && website.reason !== 'unsupported'
-      ? 'No hemos podido obtener la URL de esta pestaña. Comprueba que el navegador permite acceder a ella.'
-      : undefined;
+  const isScanning = analysis.status === 'scanning';
+
+  // ==========================================
+  // SCAN STATUS
+  // ==========================================
+
+  let scanStatus: ScanStatusType = 'idle';
+
+  if (website.status === 'loading') {
+    scanStatus = 'loading';
+  } else if (website.status === 'unavailable') {
+    scanStatus = 'unavailable';
+  } else if (analysis.status === 'scanning') {
+    scanStatus = 'scanning';
+  } else if (analysis.status === 'error') {
+    scanStatus = 'error';
+  } else if (analysis.status === 'success') {
+    scanStatus = analysis.result.prediction === 'potential_phishing' ? 'suspicious' : 'safe';
+  }
+
+  // ==========================================
+  // STATUS DESCRIPTION
+  // ==========================================
+
+  let statusDescription: string | undefined;
+
+  if (website.status === 'unavailable') {
+    if (website.reason !== 'unsupported') {
+      statusDescription =
+        'No hemos podido obtener la URL de esta pestaña. Comprueba que el navegador permite acceder a ella.';
+    }
+  } else if (analysis.status === 'error') {
+    statusDescription = analysis.message;
+  }
+
+  // ==========================================
+  // DISABLED REASON
+  // ==========================================
 
   const disabledReason =
     website.status === 'loading'
@@ -28,6 +70,22 @@ function App() {
       : website.status === 'unavailable'
         ? 'Esta página no se puede analizar'
         : undefined;
+
+  // ==========================================
+  // SCAN HANDLER
+  // ==========================================
+
+  function handleScan() {
+    if (website.status !== 'ready') {
+      return;
+    }
+
+    void analyze(website.url);
+  }
+
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
     <div className="popup">
@@ -39,9 +97,14 @@ function App() {
 
           <CurrentWebsite website={website} />
 
-          <ScanStatus status={scanStatus} description={unavailableDescription} />
+          <ScanStatus status={scanStatus} description={statusDescription} />
 
-          <ScanButton disabled={!isWebsiteAvailable} disabledReason={disabledReason} />
+          <ScanButton
+            onScan={handleScan}
+            disabled={!isWebsiteAvailable}
+            disabledReason={disabledReason}
+            isScanning={isScanning}
+          />
         </section>
       </main>
 
