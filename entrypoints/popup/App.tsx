@@ -2,6 +2,7 @@ import { PopupHeader } from './components/PopupHeader';
 import { CurrentWebsite } from './components/CurrentWebsite';
 import { ScanStatus } from './components/ScanStatus';
 import { ScanButton } from './components/ScanButton';
+import { AnalysisResult } from './components/AnalysisResult';
 
 import { useActiveTab } from './hooks/useActiveTab';
 import { useUrlAnalysis } from './hooks/useUrlAnalysis';
@@ -27,6 +28,8 @@ function App() {
 
   const isScanning = analysis.status === 'scanning';
 
+  const hasResult = website.status === 'ready' && analysis.status === 'success';
+
   // ==========================================
   // SCAN STATUS
   // ==========================================
@@ -41,8 +44,6 @@ function App() {
     scanStatus = 'scanning';
   } else if (analysis.status === 'error') {
     scanStatus = 'error';
-  } else if (analysis.status === 'success') {
-    scanStatus = analysis.result.prediction === 'potential_phishing' ? 'suspicious' : 'safe';
   }
 
   // ==========================================
@@ -97,13 +98,18 @@ function App() {
 
           <CurrentWebsite website={website} />
 
-          <ScanStatus status={scanStatus} description={statusDescription} />
+          {website.status === 'ready' && analysis.status === 'success' ? (
+            <AnalysisResult result={analysis.result} />
+          ) : (
+            <ScanStatus status={scanStatus} description={statusDescription} />
+          )}
 
           <ScanButton
             onScan={handleScan}
             disabled={!isWebsiteAvailable}
             disabledReason={disabledReason}
             isScanning={isScanning}
+            hasResult={hasResult}
           />
         </section>
       </main>
