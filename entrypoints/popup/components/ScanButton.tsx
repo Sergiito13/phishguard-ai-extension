@@ -5,6 +5,7 @@ interface ScanButtonProps {
   disabled?: boolean;
   disabledReason?: string;
   isScanning?: boolean;
+  hasResult?: boolean;
 }
 
 export function ScanButton({
@@ -12,6 +13,7 @@ export function ScanButton({
   disabled = false,
   disabledReason,
   isScanning = false,
+  hasResult = false,
 }: ScanButtonProps) {
   const isDisabled = disabled || isScanning || !onScan;
 
@@ -20,6 +22,12 @@ export function ScanButton({
     : !onScan
       ? 'Disponible cuando conectemos el motor de análisis'
       : undefined;
+
+  const buttonLabel = isScanning
+    ? 'Analizando...'
+    : hasResult
+      ? 'Analizar de nuevo'
+      : 'Analizar URL';
 
   return (
     <button
@@ -41,7 +49,7 @@ export function ScanButton({
         <Play width={20} height={20} strokeWidth={1.8} />
       )}
 
-      <span>{isScanning ? 'Analizando...' : 'Analizar URL'}</span>
+      <span>{buttonLabel}</span>
     </button>
   );
 }

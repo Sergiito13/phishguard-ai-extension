@@ -24,33 +24,33 @@ const statusConfig = {
   idle: {
     icon: ShieldQuestion,
     title: 'No analizado',
-    description: 'Analiza esta URL para comprobar si presenta posibles señales de phishing.',
+    description: 'Analiza el dominio activo para comprobar posibles señales de phishing.',
   },
 
   scanning: {
     icon: ShieldLoading,
-    title: 'Analizando URL',
-    description: 'Estamos comprobando las características de esta dirección web.',
+    title: 'Analizando dominio',
+    description: 'Estamos consultando el modelo experimental de PhishGuard AI.',
   },
 
   safe: {
     icon: ShieldCheck,
     title: 'Sin indicios detectados',
     description:
-      'El análisis experimental no ha detectado señales de phishing. Esto no garantiza que el sitio sea seguro.',
+      'El modelo no ha marcado este dominio como phishing. Esto no garantiza que la página sea segura.',
   },
 
   suspicious: {
     icon: WarningTriangle,
     title: 'Posible phishing',
     description:
-      'Se han detectado señales compatibles con phishing. Evita introducir información sensible.',
+      'El modelo ha marcado este dominio como posible phishing. Evita introducir información sensible.',
   },
 
   error: {
     icon: InfoCircle,
     title: 'Error de análisis',
-    description: 'No se ha podido completar el análisis de esta URL. Inténtalo nuevamente.',
+    description: 'No se ha podido completar el análisis. Inténtalo nuevamente.',
   },
 
   unavailable: {
@@ -63,6 +63,7 @@ const statusConfig = {
 
 export function ScanStatus({ status, description }: ScanStatusProps) {
   const config = statusConfig[status];
+
   const Icon = config.icon;
 
   return (

@@ -18,5 +18,7 @@ export default defineConfig({
       'Extensión para detectar posibles señales de phishing mediante inteligencia artificial.',
 
     permissions: ['activeTab'],
+
+    host_permissions: ['http://127.0.0.1:8000/*'],
   },
 });
