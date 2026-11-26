@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 import { PopupHeader } from './components/PopupHeader';
 import { CurrentWebsite } from './components/CurrentWebsite';
 import { ScanStatus } from './components/ScanStatus';
 import { ScanButton } from './components/ScanButton';
 import { AnalysisResult } from './components/AnalysisResult';
+import { AnalysisDetails } from './components/AnalysisDetails';
 
 import { useActiveTab } from './hooks/useActiveTab';
 import { useUrlAnalysis } from './hooks/useUrlAnalysis';
@@ -10,6 +13,9 @@ import { useUrlAnalysis } from './hooks/useUrlAnalysis';
 import type { ScanStatusType } from './components/ScanStatus';
 
 import './App.css';
+import './AnalysisResult.css';
+
+type ResultView = 'summary' | 'details';
 
 function App() {
   // ==========================================
@@ -20,6 +26,8 @@ function App() {
 
   const { state: analysis, analyze } = useUrlAnalysis();
 
+  const [resultView, setResultView] = useState<ResultView>('summary');
+
   // ==========================================
   // WEBSITE STATE
   // ==========================================
@@ -28,7 +36,12 @@ function App() {
 
   const isScanning = analysis.status === 'scanning';
 
-  const hasResult = website.status === 'ready' && analysis.status === 'success';
+  const result =
+    website.status === 'ready' && analysis.status === 'success' ? analysis.result : null;
+
+  const hasResult = result !== null;
+
+  const isDetailsView = hasResult && resultView === 'details';
 
   // ==========================================
   // SCAN STATUS
@@ -77,40 +90,76 @@ function App() {
   // ==========================================
 
   function handleScan() {
-    if (website.status !== 'ready') {
+    if (website.status !== 'ready' || isScanning) {
       return;
     }
 
+    setResultView('summary');
+
     void analyze(website.url);
   }
+
+  // ==========================================
+  // RESULT NAVIGATION
+  // ==========================================
+
+  function handleShowDetails() {
+    setResultView('details');
+  }
+
+  function handleBackToResult() {
+    setResultView('summary');
+  }
+
+  // ==========================================
+  // POPUP CLASS
+  // ==========================================
+
+  const popupClassName = isDetailsView
+    ? 'popup popup--details'
+    : hasResult
+      ? 'popup popup--result'
+      : 'popup';
 
   // ==========================================
   // RENDER
   // ==========================================
 
   return (
-    <div className="popup">
+    <div className={popupClassName}>
       <PopupHeader />
 
       <main className="popup-content">
         <section className="popup-section">
-          <h2 className="popup-section__title">Sitio web actual</h2>
-
-          <CurrentWebsite website={website} />
-
-          {website.status === 'ready' && analysis.status === 'success' ? (
-            <AnalysisResult result={analysis.result} />
+          {result && website.status === 'ready' ? (
+            isDetailsView ? (
+              <AnalysisDetails result={result} onBack={handleBackToResult} />
+            ) : (
+              <AnalysisResult
+                result={result}
+                hostname={website.hostname}
+                onShowDetails={handleShowDetails}
+              />
+            )
           ) : (
-            <ScanStatus status={scanStatus} description={statusDescription} />
+            <>
+              <h2 className="popup-section__title">Sitio web actual</h2>
+
+              <CurrentWebsite website={website} />
+
+              <ScanStatus status={scanStatus} description={statusDescription} />
+            </>
           )}
 
-          <ScanButton
-            onScan={handleScan}
-            disabled={!isWebsiteAvailable}
-            disabledReason={disabledReason}
-            isScanning={isScanning}
-            hasResult={hasResult}
-          />
+          {!isDetailsView && (
+            <ScanButton
+              onScan={handleScan}
+              disabled={!isWebsiteAvailable}
+              disabledReason={disabledReason}
+              isScanning={isScanning}
+              hasResult={hasResult}
+            />
+          )}
         </section>
       </main>
 

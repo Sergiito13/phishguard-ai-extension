@@ -493,3 +493,57 @@
     animation: none;
   }
 }
+
+/* ==========================================
+   COMPACT RESULT LAYOUT
+   ========================================== */
+
+.popup--result,
+.popup--details {
+  padding: 12px 16px;
+}
+
+/* Header */
+
+.popup--result .popup-header,
+.popup--details .popup-header {
+  padding-bottom: 10px;
+}
+
+.popup--result .popup-header__brand,
+.popup--details .popup-header__brand {
+  gap: 3px;
+}
+
+.popup--result .popup-header__logo,
+.popup--details .popup-header__logo {
+  width: 155px;
+}
+
+.popup--result .popup-header__subtitle,
+.popup--details .popup-header__subtitle {
+  font-size: 10px;
+}
+
+/* Main */
+
+.popup--result .popup-content,
+.popup--details .popup-content {
+  padding-top: 12px;
+}
+
+/* Scan button */
+
+.popup--result .scan-button {
+  min-height: 40px;
+  margin-top: 10px;
+  padding: 8px 12px;
+}
+
+/* Footer */
+
+.popup--result .popup-footer,
+.popup--details .popup-footer {
+  margin-top: 12px;
+  padding-top: 9px;
+}

@@ -1,21 +1,24 @@
-// ==========================================
-// PHISHGUARD AI — ANALYSIS RESULT
-// ==========================================
-
-import { ShieldCheck, WarningTriangle, InfoCircle } from 'iconoir-react';
+import { Globe, ShieldCheck, WarningTriangle, InfoCircle } from 'iconoir-react';
 
 import { ScoreIndicator } from './ScoreIndicator';
-import { AnalysisDetails } from './AnalysisDetails';
 
 import type { AnalysisResponse } from '../../../types/analysis';
 
-import '../AnalysisResult.css';
+// ==========================================
+// PROPS
+// ==========================================
 
 interface AnalysisResultProps {
   result: AnalysisResponse;
+  hostname: string;
+  onShowDetails: () => void;
 }
 
-export function AnalysisResult({ result }: AnalysisResultProps) {
+// ==========================================
+// COMPONENT
+// ==========================================
+
+export function AnalysisResult({ result, hostname, onShowDetails }: AnalysisResultProps) {
   // ==========================================
   // PREDICTION
   // ==========================================
@@ -27,93 +30,114 @@ export function AnalysisResult({ result }: AnalysisResultProps) {
   const title = isPhishing ? 'Posible phishing' : 'Sin indicios detectados';
 
   const description = isPhishing
-    ? 'El modelo ha identificado características compatibles con phishing en este dominio.'
-    : 'El modelo no ha marcado este dominio como phishing. Esto no garantiza que la página sea segura.';
+    ? 'El modelo ha identificado patrones compatibles con phishing.'
+    : 'El modelo no ha marcado este dominio. Esto no garantiza que sea seguro.';
 
   // ==========================================
-  // SECURITY RECOMMENDATION
+  // SECURITY ADVICE
   // ==========================================
 
   const recommendation = isPhishing
-    ? 'Evita introducir contraseñas o información personal. Accede al sitio oficial escribiendo su dirección directamente.'
-    : 'Puedes continuar navegando con precaución. Comprueba siempre el dominio antes de introducir información sensible.';
-
-  // ==========================================
-  // RESULT ICON
-  // ==========================================
+    ? 'Evita introducir datos personales. Accede al sitio oficial escribiendo su dirección.'
+    : 'Navega con precaución y comprueba el dominio antes de introducir información sensible.';
 
   const StatusIcon = isPhishing ? WarningTriangle : ShieldCheck;
+
+  // ==========================================
+  // FORMATTERS
+  // ==========================================
+
+  const formattedThreshold = result.threshold.toLocaleString('es-ES', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   // ==========================================
   // RENDER
   // ==========================================
 
   return (
-    <div className={`analysis-result analysis-result--${status}`}>
-      {/* RESULT BANNER */}
+    <section
+      className={`analysis-result analysis-result--${status}`}
+      aria-label="Resultado del análisis"
+    >
+      {/* WEBSITE */}
 
-      <section className="analysis-result__banner" role="status" aria-live="polite">
+      <div className="analysis-result__site">
+        <Globe width={17} height={17} strokeWidth={1.8} />
+
+        <span className="analysis-result__site-name" title={hostname}>
+          {hostname}
+        </span>
+
+        <span className="analysis-result__site-tag">Analizado</span>
+      </div>
+
+      {/* RESULT */}
+
+      <div className="analysis-result__banner" role="status" aria-live="polite">
         <div className="analysis-result__status-icon">
-          <StatusIcon width={28} height={28} strokeWidth={1.8} />
+          <StatusIcon width={23} height={23} strokeWidth={1.8} />
         </div>
 
         <div className="analysis-result__banner-content">
-          <h3 className="analysis-result__title">{title}</h3>
+          <h2 className="analysis-result__title">{title}</h2>
 
           <p className="analysis-result__description">{description}</p>
 
           <span className="analysis-result__classification">Clasificación experimental</span>
         </div>
-      </section>
+      </div>
 
-      {/* MODEL SCORE */}
+      {/* MODEL OVERVIEW */}
 
-      <section className="analysis-result__overview" aria-label="Información del modelo">
+      <div className="analysis-result__overview" aria-label="Resumen del modelo">
         <ScoreIndicator score={result.phishing_score} />
 
         <dl className="analysis-result__facts">
           <div className="analysis-result__fact">
             <dt>Umbral de decisión</dt>
-
-            <dd>
-              {result.threshold.toLocaleString('es-ES', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </dd>
+            <dd>{formattedThreshold}</dd>
           </div>
 
           <div className="analysis-result__fact">
-            <dt>Características analizadas</dt>
-
-            <dd>{result.features_analyzed}</dd>
+            <dt>Características</dt>
+            <dd>{result.features_analyzed} analizadas</dd>
           </div>
 
           <div className="analysis-result__fact">
-            <dt>Modelo</dt>
-
-            <dd>{result.model_version}</dd>
+            <dt>Calibración</dt>
+            <dd>{result.calibrated ? 'Calibrado' : 'No calibrado'}</dd>
           </div>
         </dl>
-      </section>
+      </div>
 
-      {/* SECURITY ADVICE */}
+      {/* RECOMMENDATION */}
 
-      <section className="analysis-result__advice">
-        <div className="analysis-result__advice-icon">
-          <InfoCircle width={20} height={20} strokeWidth={1.8} />
-        </div>
+      <div className="analysis-result__advice">
+        <InfoCircle
+          width={18}
+          height={18}
+          strokeWidth={1.8}
+          className="analysis-result__advice-icon"
+        />
 
-        <div>
+        <div className="analysis-result__advice-content">
           <h3>Recomendación</h3>
 
           <p>{recommendation}</p>
         </div>
-      </section>
+      </div>
 
-      {/* EXPANDABLE DETAILS */}
+      {/* DETAILS NAVIGATION */}
 
-      <AnalysisDetails result={result} />
-    </div>
+      <button type="button" className="analysis-result__details-button" onClick={onShowDetails}>
+        <span>Ver detalles del análisis</span>
+
+        <span className="analysis-result__details-arrow" aria-hidden="true">
+          ›
+        </span>
+      </button>
+    </section>
   );
 }
