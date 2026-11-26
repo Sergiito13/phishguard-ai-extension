@@ -1,105 +1,73 @@
 import { InfoCircle } from 'iconoir-react';
+import { useTranslation } from 'react-i18next';
 
 import type { AnalysisResponse } from '../../../types/analysis';
-
-// ==========================================
-// PROPS
-// ==========================================
 
 interface AnalysisDetailsProps {
   result: AnalysisResponse;
   onBack: () => void;
 }
 
-// ==========================================
-// HELPERS
-// ==========================================
-
-function formatScore(value: number): string {
-  return value.toLocaleString('es-ES', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4,
-  });
-}
-
-// ==========================================
-// COMPONENT
-// ==========================================
-
 export function AnalysisDetails({ result, onBack }: AnalysisDetailsProps) {
-  const classification =
-    result.prediction === 'potential_phishing' ? 'Posible phishing' : 'Sin indicios detectados';
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'es' ? 'es-ES' : 'en-GB';
+
+  function formatScore(value: number): string {
+    return value.toLocaleString(locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 4,
+    });
+  }
 
   return (
     <section className="analysis-details" aria-labelledby="analysis-details-title">
-      {/* BACK */}
-
       <button type="button" className="analysis-details__back" onClick={onBack}>
         <span aria-hidden="true">←</span>
-        <span>Volver al resultado</span>
+        <span>{t('details.back')}</span>
       </button>
 
-      {/* HEADER */}
-
       <div className="analysis-details__header">
-        <h2 id="analysis-details-title">Detalles del análisis</h2>
-
-        <p>Información técnica del modelo experimental.</p>
+        <h2 id="analysis-details-title">{t('details.title')}</h2>
+        <p>{t('details.subtitle')}</p>
       </div>
-
-      {/* DATA */}
 
       <dl className="analysis-details__list">
         <div className="analysis-details__row">
-          <dt>URL evaluada</dt>
+          <dt>{t('details.evaluatedUrl')}</dt>
           <dd className="analysis-details__url">{result.url}</dd>
         </div>
-
         <div className="analysis-details__row">
-          <dt>Clasificación</dt>
-          <dd>{classification}</dd>
+          <dt>{t('details.classification')}</dt>
+          <dd>{t(result.prediction === 'potential_phishing' ? 'result.phishingTitle' : 'result.safeTitle')}</dd>
         </div>
-
         <div className="analysis-details__row">
-          <dt>Puntuación experimental</dt>
+          <dt>{t('details.score')}</dt>
           <dd>{formatScore(result.phishing_score)}</dd>
         </div>
-
         <div className="analysis-details__row">
-          <dt>Umbral de decisión</dt>
+          <dt>{t('details.threshold')}</dt>
           <dd>{formatScore(result.threshold)}</dd>
         </div>
-
         <div className="analysis-details__row">
-          <dt>Características analizadas</dt>
+          <dt>{t('details.features')}</dt>
           <dd>{result.features_analyzed}</dd>
         </div>
-
         <div className="analysis-details__row">
-          <dt>Versión del modelo</dt>
+          <dt>{t('details.model')}</dt>
           <dd>{result.model_version}</dd>
         </div>
-
         <div className="analysis-details__row">
-          <dt>Calibración</dt>
-          <dd>{result.calibrated ? 'Calibrado' : 'No calibrado'}</dd>
+          <dt>{t('details.calibration')}</dt>
+          <dd>{t(result.calibrated ? 'result.calibrated' : 'result.notCalibrated')}</dd>
         </div>
       </dl>
 
-      {/* DISCLAIMER */}
-
       <div className="analysis-details__notice">
         <InfoCircle width={18} height={18} strokeWidth={1.8} />
-
         <div>
-          <h3>Modelo experimental</h3>
-
-          <p>
-            La puntuación no garantiza la seguridad del sitio. Si no está calibrada, tampoco
-            representa una probabilidad de phishing.
-          </p>
-
-          <p>Actualmente solo analizamos el origen de la URL, no el contenido de la página.</p>
+          <h3>{t('details.noticeTitle')}</h3>
+          <p>{t('details.noticeText')}</p>
+          <p>{t('details.privacyText')}</p>
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { Play, ShieldLoading } from 'iconoir-react';
+import { useTranslation } from 'react-i18next';
 
 interface ScanButtonProps {
   onScan?: () => void;
@@ -15,19 +16,14 @@ export function ScanButton({
   isScanning = false,
   hasResult = false,
 }: ScanButtonProps) {
+  const { t } = useTranslation();
   const isDisabled = disabled || isScanning || !onScan;
-
-  const buttonTitle = disabled
-    ? (disabledReason ?? 'Esta página no se puede analizar')
-    : !onScan
-      ? 'Disponible cuando conectemos el motor de análisis'
-      : undefined;
-
+  const buttonTitle = disabled ? (disabledReason ?? t('scan.disabled')) : undefined;
   const buttonLabel = isScanning
-    ? 'Analizando...'
+    ? t('scan.scanning')
     : hasResult
-      ? 'Analizar de nuevo'
-      : 'Analizar URL';
+      ? t('scan.again')
+      : t('scan.analyze');
 
   return (
     <button
@@ -48,7 +44,6 @@ export function ScanButton({
       ) : (
         <Play width={20} height={20} strokeWidth={1.8} />
       )}
-
       <span>{buttonLabel}</span>
     </button>
   );

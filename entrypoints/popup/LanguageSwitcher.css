@@ -1,0 +1,117 @@
+/* PhishGuard AI — compact language selector with text over the flag */
+.popup-header__actions {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  gap: 7px;
+}
+
+.language-switcher {
+  position: relative;
+  z-index: 20;
+}
+
+.language-switcher__button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 3px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--glass-background);
+  color: white;
+  cursor: pointer;
+}
+
+.language-switcher__button:hover,
+.language-switcher__button[aria-expanded='true'] {
+  background: rgba(135, 233, 208, 0.08);
+  border-color: var(--border-hover);
+}
+
+.language-switcher__button-flag {
+  display: block;
+  width: 28px;
+  height: 21px;
+  border-radius: 3px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.language-switcher__code {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1px 3px;
+  border-radius: 3px;
+  background: rgba(7, 28, 28, 0.82);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.025em;
+  pointer-events: none;
+}
+
+.language-switcher__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 7px);
+  z-index: 30;
+  width: 152px;
+  padding: 5px;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.36);
+}
+
+.language-switcher__option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 34px;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  text-align: left;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.language-switcher__flag {
+  display: block;
+  width: 18px;
+  height: 14px;
+  border-radius: 2px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.language-switcher__option > span {
+  flex: 1;
+}
+
+.language-switcher__option:hover,
+.language-switcher__option--active {
+  background: rgba(135, 233, 208, 0.09);
+  color: var(--text-primary);
+}
+
+.language-switcher__option--active > svg {
+  color: var(--brand-primary);
+}
+
+.language-switcher__button:focus-visible,
+.language-switcher__option:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
