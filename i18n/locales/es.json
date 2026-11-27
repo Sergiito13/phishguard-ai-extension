@@ -1,8 +1,8 @@
 {
   "header": {
     "subtitle": "Protección inteligente contra el phishing",
-    "settingsSoon": "Configuración (próximamente)",
-    "selectLanguage": "Seleccionar idioma"
+    "selectLanguage": "Seleccionar idioma",
+    "settings": "Configuración"
   },
   "website": {
     "title": "Sitio web actual",
@@ -21,13 +21,34 @@
     "disabled": "Esta página no se puede analizar"
   },
   "status": {
-    "loading": { "title": "Comprobando página", "description": "Estamos obteniendo la información de la pestaña activa." },
-    "idle": { "title": "No analizado", "description": "Analiza el dominio activo para comprobar posibles señales de phishing." },
-    "scanning": { "title": "Analizando dominio", "description": "Estamos consultando el modelo experimental de PhishGuard AI." },
-    "safe": { "title": "Sin indicios detectados", "description": "El modelo no ha marcado este dominio como phishing. Esto no garantiza que la página sea segura." },
-    "suspicious": { "title": "Posible phishing", "description": "El modelo ha marcado este dominio como posible phishing. Evita introducir información sensible." },
-    "error": { "title": "Error de análisis", "description": "No se ha podido completar el análisis. Inténtalo nuevamente." },
-    "unavailable": { "title": "No disponible", "description": "Esta página no puede analizarse. Solo se admiten direcciones HTTP y HTTPS." }
+    "loading": {
+      "title": "Comprobando página",
+      "description": "Estamos obteniendo la información de la pestaña activa."
+    },
+    "idle": {
+      "title": "No analizado",
+      "description": "Analiza el dominio activo para comprobar posibles señales de phishing."
+    },
+    "scanning": {
+      "title": "Analizando dominio",
+      "description": "Estamos consultando el modelo experimental de PhishGuard AI."
+    },
+    "safe": {
+      "title": "Sin indicios detectados",
+      "description": "El modelo no ha marcado este dominio como phishing. Esto no garantiza que la página sea segura."
+    },
+    "suspicious": {
+      "title": "Posible phishing",
+      "description": "El modelo ha marcado este dominio como posible phishing. Evita introducir información sensible."
+    },
+    "error": {
+      "title": "Error de análisis",
+      "description": "No se ha podido completar el análisis. Inténtalo nuevamente."
+    },
+    "unavailable": {
+      "title": "No disponible",
+      "description": "Esta página no puede analizarse. Solo se admiten direcciones HTTP y HTTPS."
+    }
   },
   "result": {
     "section": "Resultado del análisis",
@@ -80,5 +101,34 @@
     "invalidScore": "El servidor ha devuelto una puntuación no válida.",
     "unexpected": "Se ha producido un error inesperado."
   },
-  "footer": { "poweredBy": "Powered by PhishGuard AI" }
+  "footer": {
+    "poweredBy": "Powered by PhishGuard AI"
+  },
+  "settings": {
+    "back": "Volver",
+    "title": "Configuración",
+    "subtitle": "Información y preferencias de PhishGuard AI.",
+    "api": {
+      "title": "Motor de análisis",
+      "connected": "API conectada",
+      "checking": "Comprobando conexión",
+      "disconnected": "API desconectada",
+      "version": "Versión de API: {{version}}",
+      "address": "Dirección local",
+      "checkButton": "Comprobar conexión",
+      "checkingButton": "Comprobando…",
+      "healthNote": "Se comprueba el servicio FastAPI, no la disponibilidad del modelo ML."
+    },
+    "privacy": {
+      "title": "Privacidad y seguridad",
+      "manualTitle": "Análisis manual",
+      "description": "Solo al pulsar Analizar URL enviamos el origen (protocolo, dominio y puerto). No enviamos rutas, parámetros ni contenido de la página.",
+      "disclaimer": "Modelo experimental: el resultado no garantiza que una web sea segura."
+    },
+    "about": {
+      "title": "Acerca de",
+      "description": "Extensión de código abierto para analizar URL con un modelo experimental.",
+      "github": "Ver código en GitHub"
+    }
+  }
 }

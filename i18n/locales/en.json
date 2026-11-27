@@ -1,8 +1,8 @@
 {
   "header": {
     "subtitle": "Intelligent phishing protection",
-    "settingsSoon": "Settings (coming soon)",
-    "selectLanguage": "Select language"
+    "selectLanguage": "Select language",
+    "settings": "Settings"
   },
   "website": {
     "title": "Current website",
@@ -21,13 +21,34 @@
     "disabled": "This page cannot be analyzed"
   },
   "status": {
-    "loading": { "title": "Checking page", "description": "Retrieving information about the active tab." },
-    "idle": { "title": "Not analyzed", "description": "Analyze the active domain for possible phishing signals." },
-    "scanning": { "title": "Analyzing domain", "description": "Consulting the experimental PhishGuard AI model." },
-    "safe": { "title": "No signs detected", "description": "The model did not flag this domain as phishing. This does not guarantee that the page is safe." },
-    "suspicious": { "title": "Potential phishing", "description": "The model flagged this domain as potential phishing. Avoid entering sensitive information." },
-    "error": { "title": "Analysis error", "description": "Unable to complete the analysis. Please try again." },
-    "unavailable": { "title": "Unavailable", "description": "This page cannot be analyzed. Only HTTP and HTTPS addresses are supported." }
+    "loading": {
+      "title": "Checking page",
+      "description": "Retrieving information about the active tab."
+    },
+    "idle": {
+      "title": "Not analyzed",
+      "description": "Analyze the active domain for possible phishing signals."
+    },
+    "scanning": {
+      "title": "Analyzing domain",
+      "description": "Consulting the experimental PhishGuard AI model."
+    },
+    "safe": {
+      "title": "No signs detected",
+      "description": "The model did not flag this domain as phishing. This does not guarantee that the page is safe."
+    },
+    "suspicious": {
+      "title": "Potential phishing",
+      "description": "The model flagged this domain as potential phishing. Avoid entering sensitive information."
+    },
+    "error": {
+      "title": "Analysis error",
+      "description": "Unable to complete the analysis. Please try again."
+    },
+    "unavailable": {
+      "title": "Unavailable",
+      "description": "This page cannot be analyzed. Only HTTP and HTTPS addresses are supported."
+    }
   },
   "result": {
     "section": "Analysis result",
@@ -80,5 +101,34 @@
     "invalidScore": "The server returned an invalid score.",
     "unexpected": "An unexpected error occurred."
   },
-  "footer": { "poweredBy": "Powered by PhishGuard AI" }
+  "footer": {
+    "poweredBy": "Powered by PhishGuard AI"
+  },
+  "settings": {
+    "back": "Back",
+    "title": "Settings",
+    "subtitle": "PhishGuard AI information and preferences.",
+    "api": {
+      "title": "Analysis engine",
+      "connected": "API connected",
+      "checking": "Checking connection",
+      "disconnected": "API disconnected",
+      "version": "API version: {{version}}",
+      "address": "Local address",
+      "checkButton": "Check connection",
+      "checkingButton": "Checking…",
+      "healthNote": "This checks the FastAPI service, not ML model availability."
+    },
+    "privacy": {
+      "title": "Privacy and security",
+      "manualTitle": "Manual analysis",
+      "description": "Only when you click Analyze URL do we send the origin (scheme, hostname and port). Paths, parameters and page content are not sent.",
+      "disclaimer": "Experimental model: results do not guarantee that a site is safe."
+    },
+    "about": {
+      "title": "About",
+      "description": "Open-source extension for analyzing URLs using an experimental model.",
+      "github": "View source on GitHub"
+    }
+  }
 }
