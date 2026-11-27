@@ -6,8 +6,10 @@ import '@fontsource/geist-sans/500.css';
 import '@fontsource/geist-sans/600.css';
 import '@fontsource/geist-sans/700.css';
 
-import App from './App';
+// Initialize translations before rendering React.
+import '../../i18n';
 
+import App from './App';
 import './styles/tokens.css';
 import './style.css';
 

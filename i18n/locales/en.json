@@ -1,0 +1,84 @@
+{
+  "header": {
+    "subtitle": "Intelligent phishing protection",
+    "settingsSoon": "Settings (coming soon)",
+    "selectLanguage": "Select language"
+  },
+  "website": {
+    "title": "Current website",
+    "loading": "Loading website...",
+    "noAccess": "URL unavailable",
+    "unsupported": "Unsupported page",
+    "error": "Could not read page",
+    "noAccessDescription": "Could not obtain this tab's URL. Check browser permissions.",
+    "loadingReason": "Checking the active tab",
+    "unavailableReason": "This page cannot be analyzed"
+  },
+  "scan": {
+    "analyze": "Analyze URL",
+    "scanning": "Analyzing...",
+    "again": "Analyze again",
+    "disabled": "This page cannot be analyzed"
+  },
+  "status": {
+    "loading": { "title": "Checking page", "description": "Retrieving information about the active tab." },
+    "idle": { "title": "Not analyzed", "description": "Analyze the active domain for possible phishing signals." },
+    "scanning": { "title": "Analyzing domain", "description": "Consulting the experimental PhishGuard AI model." },
+    "safe": { "title": "No signs detected", "description": "The model did not flag this domain as phishing. This does not guarantee that the page is safe." },
+    "suspicious": { "title": "Potential phishing", "description": "The model flagged this domain as potential phishing. Avoid entering sensitive information." },
+    "error": { "title": "Analysis error", "description": "Unable to complete the analysis. Please try again." },
+    "unavailable": { "title": "Unavailable", "description": "This page cannot be analyzed. Only HTTP and HTTPS addresses are supported." }
+  },
+  "result": {
+    "section": "Analysis result",
+    "analyzed": "Analyzed",
+    "safeTitle": "No signs detected",
+    "safeDescription": "The model did not flag this domain. This does not guarantee it is safe.",
+    "phishingTitle": "Potential phishing",
+    "phishingDescription": "The model found patterns compatible with phishing.",
+    "experimental": "Experimental classification",
+    "overview": "Model overview",
+    "threshold": "Decision threshold",
+    "features": "Features",
+    "featuresCount": "{{count}} analyzed",
+    "calibration": "Calibration",
+    "calibrated": "Calibrated",
+    "notCalibrated": "Uncalibrated",
+    "recommendation": "Recommendation",
+    "safeAdvice": "Browse cautiously and check the domain before entering sensitive information.",
+    "phishingAdvice": "Avoid entering personal information. Navigate to the official site by typing its address.",
+    "detailsLink": "View analysis details"
+  },
+  "score": {
+    "labelFirst": "Experimental",
+    "labelSecond": "model score",
+    "accessible": "Experimental model score {{score}} out of 1. Not a phishing probability."
+  },
+  "details": {
+    "back": "Back to result",
+    "title": "Analysis details",
+    "subtitle": "Technical information about the experimental model.",
+    "evaluatedUrl": "Evaluated URL",
+    "classification": "Classification",
+    "score": "Experimental score",
+    "threshold": "Decision threshold",
+    "features": "Features analyzed",
+    "model": "Model version",
+    "calibration": "Calibration",
+    "noticeTitle": "Experimental model",
+    "noticeText": "The score does not guarantee that a site is safe. When uncalibrated, it is not a phishing probability either.",
+    "privacyText": "We currently analyze only the URL origin, not the page content."
+  },
+  "errors": {
+    "invalidUrl": "The provided URL is invalid.",
+    "unsupportedUrl": "Only HTTP and HTTPS URLs can be analyzed.",
+    "connection": "Could not connect to FastAPI. Check that the server is running.",
+    "modelUnavailable": "The analysis model is unavailable.",
+    "http": "Unable to complete the analysis. HTTP {{status}}.",
+    "invalidResponse": "The server returned an invalid response.",
+    "unknownPrediction": "The server returned an unknown prediction.",
+    "invalidScore": "The server returned an invalid score.",
+    "unexpected": "An unexpected error occurred."
+  },
+  "footer": { "poweredBy": "Powered by PhishGuard AI" }
+}

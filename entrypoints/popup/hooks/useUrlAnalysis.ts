@@ -1,112 +1,50 @@
-// ==========================================
-// PHISHGUARD AI — URL ANALYSIS HOOK
-// ==========================================
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { analyzeUrl } from '../../../lib/api/analysis';
-
+import { analyzeUrl, AnalysisApiError } from '../../../lib/api/analysis';
 import type { AnalysisResponse } from '../../../types/analysis';
 
-// ==========================================
-// ANALYSIS STATES
-// ==========================================
-
 export type UrlAnalysisState =
-  | {
-      status: 'idle';
-    }
-  | {
-      status: 'scanning';
-    }
-  | {
-      status: 'success';
-      result: AnalysisResponse;
-    }
+  | { status: 'idle' }
+  | { status: 'scanning' }
+  | { status: 'success'; result: AnalysisResponse }
   | {
       status: 'error';
-      message: string;
+      translationKey: string;
+      interpolation?: Record<string, string | number>;
     };
 
-// ==========================================
-// HOOK
-// ==========================================
-
 export function useUrlAnalysis() {
-  const [state, setState] = useState<UrlAnalysisState>({
-    status: 'idle',
-  });
-
+  const [state, setState] = useState<UrlAnalysisState>({ status: 'idle' });
   const controllerRef = useRef<AbortController | null>(null);
 
-  // ==========================================
-  // EXECUTE ANALYSIS
-  // ==========================================
-
   const analyze = useCallback(async (url: string) => {
-    // Cancel any previous request
     controllerRef.current?.abort();
-
     const controller = new AbortController();
-
     controllerRef.current = controller;
-
-    // Update loading state
-    setState({
-      status: 'scanning',
-    });
+    setState({ status: 'scanning' });
 
     try {
-      // Request model prediction
       const result = await analyzeUrl(url, controller.signal);
-
-      // Ignore cancelled requests
-      if (controller.signal.aborted) {
-        return;
-      }
-
-      // Store successful result
-      setState({
-        status: 'success',
-        result,
-      });
+      if (!controller.signal.aborted) setState({ status: 'success', result });
     } catch (error) {
-      // Ignore cancelled requests
-      if (controller.signal.aborted) {
-        return;
+      if (controller.signal.aborted) return;
+
+      if (error instanceof AnalysisApiError) {
+        setState({
+          status: 'error',
+          translationKey: error.translationKey,
+          interpolation: error.interpolation,
+        });
+      } else {
+        console.error('Unexpected URL analysis error', error);
+        setState({ status: 'error', translationKey: 'errors.unexpected' });
       }
-
-      const message =
-        error instanceof Error ? error.message : 'Se ha producido un error inesperado.';
-
-      // Store error
-      setState({
-        status: 'error',
-        message,
-      });
     } finally {
-      if (controllerRef.current === controller) {
-        controllerRef.current = null;
-      }
+      if (controllerRef.current === controller) controllerRef.current = null;
     }
   }, []);
 
-  // ==========================================
-  // CLEANUP
-  // ==========================================
+  useEffect(() => () => controllerRef.current?.abort(), []);
 
-  useEffect(() => {
-    return () => {
-      controllerRef.current?.abort();
-    };
-  }, []);
-
-  // ==========================================
-  // RETURN HOOK API
-  // ==========================================
-
-  return {
-    state,
-    analyze,
-  };
+  return { state, analyze };
 }

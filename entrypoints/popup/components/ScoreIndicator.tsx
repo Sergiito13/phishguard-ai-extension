@@ -1,20 +1,15 @@
-// ==========================================
-// PHISHGUARD AI — SCORE INDICATOR
-// ==========================================
+import { useTranslation } from 'react-i18next';
 
 interface ScoreIndicatorProps {
   score: number;
 }
 
 export function ScoreIndicator({ score }: ScoreIndicatorProps) {
-  // Ensure the score stays between 0 and 1
+  const { t, i18n } = useTranslation();
   const normalizedScore = Math.min(1, Math.max(0, score));
-
-  // Used only to draw the progress ring
   const progress = normalizedScore * 100;
-
-  // Display the raw model score, not a risk percentage
-  const formattedScore = normalizedScore.toLocaleString('es-ES', {
+  const locale = i18n.resolvedLanguage === 'es' ? 'es-ES' : 'en-GB';
+  const formattedScore = normalizedScore.toLocaleString(locale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -24,21 +19,17 @@ export function ScoreIndicator({ score }: ScoreIndicatorProps) {
       <div
         className="score-indicator__ring"
         style={{
-          background: `conic-gradient(
-            var(--result-accent) ${progress}%,
-            rgba(255, 255, 255, 0.08) ${progress}%
-          )`,
+          background: `conic-gradient(var(--result-accent) ${progress}%, rgba(255,255,255,0.08) ${progress}%)`,
         }}
         role="img"
-        aria-label={`Puntuación experimental ${formattedScore} sobre 1. No es una probabilidad de phishing.`}
+        aria-label={t('score.accessible', { score: formattedScore })}
       >
         <div className="score-indicator__inner">
           <span className="score-indicator__value">{formattedScore}</span>
-
           <span className="score-indicator__label">
-            Puntuación
+            {t('score.labelFirst')}
             <br />
-            experimental
+            {t('score.labelSecond')}
           </span>
         </div>
       </div>

@@ -1,0 +1,84 @@
+{
+  "header": {
+    "subtitle": "Protección inteligente contra el phishing",
+    "settingsSoon": "Configuración (próximamente)",
+    "selectLanguage": "Seleccionar idioma"
+  },
+  "website": {
+    "title": "Sitio web actual",
+    "loading": "Cargando sitio web...",
+    "noAccess": "URL no disponible",
+    "unsupported": "Página no compatible",
+    "error": "No se pudo leer la página",
+    "noAccessDescription": "No hemos podido obtener la URL de esta pestaña. Comprueba los permisos del navegador.",
+    "loadingReason": "Comprobando la pestaña activa",
+    "unavailableReason": "Esta página no se puede analizar"
+  },
+  "scan": {
+    "analyze": "Analizar URL",
+    "scanning": "Analizando...",
+    "again": "Analizar de nuevo",
+    "disabled": "Esta página no se puede analizar"
+  },
+  "status": {
+    "loading": { "title": "Comprobando página", "description": "Estamos obteniendo la información de la pestaña activa." },
+    "idle": { "title": "No analizado", "description": "Analiza el dominio activo para comprobar posibles señales de phishing." },
+    "scanning": { "title": "Analizando dominio", "description": "Estamos consultando el modelo experimental de PhishGuard AI." },
+    "safe": { "title": "Sin indicios detectados", "description": "El modelo no ha marcado este dominio como phishing. Esto no garantiza que la página sea segura." },
+    "suspicious": { "title": "Posible phishing", "description": "El modelo ha marcado este dominio como posible phishing. Evita introducir información sensible." },
+    "error": { "title": "Error de análisis", "description": "No se ha podido completar el análisis. Inténtalo nuevamente." },
+    "unavailable": { "title": "No disponible", "description": "Esta página no puede analizarse. Solo se admiten direcciones HTTP y HTTPS." }
+  },
+  "result": {
+    "section": "Resultado del análisis",
+    "analyzed": "Analizado",
+    "safeTitle": "Sin indicios detectados",
+    "safeDescription": "El modelo no ha marcado este dominio. Esto no garantiza que sea seguro.",
+    "phishingTitle": "Posible phishing",
+    "phishingDescription": "El modelo ha identificado patrones compatibles con phishing.",
+    "experimental": "Clasificación experimental",
+    "overview": "Resumen del modelo",
+    "threshold": "Umbral de decisión",
+    "features": "Características",
+    "featuresCount": "{{count}} analizadas",
+    "calibration": "Calibración",
+    "calibrated": "Calibrado",
+    "notCalibrated": "No calibrado",
+    "recommendation": "Recomendación",
+    "safeAdvice": "Navega con precaución y comprueba el dominio antes de introducir información sensible.",
+    "phishingAdvice": "Evita introducir datos personales. Accede al sitio oficial escribiendo su dirección.",
+    "detailsLink": "Ver detalles del análisis"
+  },
+  "score": {
+    "labelFirst": "Puntuación",
+    "labelSecond": "experimental",
+    "accessible": "Puntuación experimental {{score}} sobre 1. No es una probabilidad de phishing."
+  },
+  "details": {
+    "back": "Volver al resultado",
+    "title": "Detalles del análisis",
+    "subtitle": "Información técnica del modelo experimental.",
+    "evaluatedUrl": "URL evaluada",
+    "classification": "Clasificación",
+    "score": "Puntuación experimental",
+    "threshold": "Umbral de decisión",
+    "features": "Características analizadas",
+    "model": "Versión del modelo",
+    "calibration": "Calibración",
+    "noticeTitle": "Modelo experimental",
+    "noticeText": "La puntuación no garantiza la seguridad del sitio. Si no está calibrada, tampoco representa una probabilidad de phishing.",
+    "privacyText": "Actualmente solo analizamos el origen de la URL, no el contenido de la página."
+  },
+  "errors": {
+    "invalidUrl": "La dirección proporcionada no es válida.",
+    "unsupportedUrl": "Solo se pueden analizar direcciones HTTP y HTTPS.",
+    "connection": "No se puede conectar con FastAPI. Comprueba que el servidor está funcionando.",
+    "modelUnavailable": "El modelo de análisis no está disponible.",
+    "http": "No se pudo completar el análisis. Error HTTP {{status}}.",
+    "invalidResponse": "El servidor ha devuelto una respuesta no válida.",
+    "unknownPrediction": "El servidor ha devuelto una predicción no reconocida.",
+    "invalidScore": "El servidor ha devuelto una puntuación no válida.",
+    "unexpected": "Se ha producido un error inesperado."
+  },
+  "footer": { "poweredBy": "Powered by PhishGuard AI" }
+}

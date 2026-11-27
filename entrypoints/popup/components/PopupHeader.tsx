@@ -1,6 +1,11 @@
 import { Settings } from 'iconoir-react';
+import { useTranslation } from 'react-i18next';
+
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function PopupHeader() {
+  const { t } = useTranslation();
+
   return (
     <header className="popup-header">
       <div className="popup-header__brand">
@@ -9,19 +14,21 @@ export function PopupHeader() {
           alt="PhishGuard AI"
           className="popup-header__logo"
         />
-
-        <p className="popup-header__subtitle">Protección inteligente contra el phishing</p>
+        <p className="popup-header__subtitle">{t('header.subtitle')}</p>
       </div>
 
-      <button
-        type="button"
-        className="popup-header__settings"
-        aria-label="Configuración (próximamente)"
-        title="Configuración próximamente"
-        disabled
-      >
-        <Settings width={20} height={20} strokeWidth={1.8} />
-      </button>
+      <div className="popup-header__actions">
+        <LanguageSwitcher />
+        <button
+          type="button"
+          className="popup-header__settings"
+          aria-label={t('header.settingsSoon')}
+          title={t('header.settingsSoon')}
+          disabled
+        >
+          <Settings width={20} height={20} strokeWidth={1.8} />
+        </button>
+      </div>
     </header>
   );
 }
