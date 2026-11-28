@@ -1,6 +1,6 @@
 import type { AnalysisRequest, AnalysisResponse } from '../../types/analysis';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api/v1';
+export const API_BASE_URL = 'http://127.0.0.1:8000/api/v1';
 
 /** A stable error key allows UI messages to be translated after the request fails. */
 export class AnalysisApiError extends Error {
@@ -60,9 +60,12 @@ export async function analyzeUrl(url: string, signal?: AbortSignal): Promise<Ana
     throw new AnalysisApiError('errors.unknownPrediction');
   }
 
-  if (typeof result.phishing_score !== 'number' ||
-      !Number.isFinite(result.phishing_score) ||
-      result.phishing_score < 0 || result.phishing_score > 1) {
+  if (
+    typeof result.phishing_score !== 'number' ||
+    !Number.isFinite(result.phishing_score) ||
+    result.phishing_score < 0 ||
+    result.phishing_score > 1
+  ) {
     throw new AnalysisApiError('errors.invalidScore');
   }
 

@@ -7,6 +7,7 @@ import { ScanStatus } from './components/ScanStatus';
 import { ScanButton } from './components/ScanButton';
 import { AnalysisResult } from './components/AnalysisResult';
 import { AnalysisDetails } from './components/AnalysisDetails';
+import { SettingsPage } from './components/SettingsPage';
 
 import { useActiveTab } from './hooks/useActiveTab';
 import { useUrlAnalysis } from './hooks/useUrlAnalysis';
@@ -16,12 +17,15 @@ import './App.css';
 import './AnalysisResult.css';
 
 type ResultView = 'summary' | 'details';
+type PopupView = 'analysis' | 'settings';
 
 function App() {
   const { t } = useTranslation();
   const website = useActiveTab();
   const { state: analysis, analyze } = useUrlAnalysis();
+
   const [resultView, setResultView] = useState<ResultView>('summary');
+  const [popupView, setPopupView] = useState<PopupView>('analysis');
 
   const isWebsiteAvailable = website.status === 'ready';
   const isScanning = analysis.status === 'scanning';
@@ -29,6 +33,7 @@ function App() {
     website.status === 'ready' && analysis.status === 'success' ? analysis.result : null;
   const hasResult = result !== null;
   const isDetailsView = hasResult && resultView === 'details';
+  const isSettingsView = popupView === 'settings';
 
   let scanStatus: ScanStatusType = 'idle';
   if (website.status === 'loading') scanStatus = 'loading';
@@ -58,46 +63,56 @@ function App() {
     void analyze(website.url);
   }
 
-  const popupClassName = isDetailsView
-    ? 'popup popup--details'
-    : hasResult
-      ? 'popup popup--result'
-      : 'popup';
+  function toggleSettings() {
+    setPopupView((current) => (current === 'settings' ? 'analysis' : 'settings'));
+  }
+
+  const popupClassName = isSettingsView
+    ? 'popup popup--settings'
+    : isDetailsView
+      ? 'popup popup--details'
+      : hasResult
+        ? 'popup popup--result'
+        : 'popup';
 
   return (
     <div className={popupClassName}>
-      <PopupHeader />
+      <PopupHeader isSettingsOpen={isSettingsView} onSettingsClick={toggleSettings} />
 
       <main className="popup-content">
-        <section className="popup-section">
-          {result && website.status === 'ready' ? (
-            isDetailsView ? (
-              <AnalysisDetails result={result} onBack={() => setResultView('summary')} />
+        {isSettingsView ? (
+          <SettingsPage onBack={() => setPopupView('analysis')} />
+        ) : (
+          <section className="popup-section">
+            {result && website.status === 'ready' ? (
+              isDetailsView ? (
+                <AnalysisDetails result={result} onBack={() => setResultView('summary')} />
+              ) : (
+                <AnalysisResult
+                  result={result}
+                  hostname={website.hostname}
+                  onShowDetails={() => setResultView('details')}
+                />
+              )
             ) : (
-              <AnalysisResult
-                result={result}
-                hostname={website.hostname}
-                onShowDetails={() => setResultView('details')}
-              />
-            )
-          ) : (
-            <>
-              <h2 className="popup-section__title">{t('website.title')}</h2>
-              <CurrentWebsite website={website} />
-              <ScanStatus status={scanStatus} description={statusDescription} />
-            </>
-          )}
+              <>
+                <h2 className="popup-section__title">{t('website.title')}</h2>
+                <CurrentWebsite website={website} />
+                <ScanStatus status={scanStatus} description={statusDescription} />
+              </>
+            )}
 
-          {!isDetailsView && (
-            <ScanButton
-              onScan={handleScan}
-              disabled={!isWebsiteAvailable}
-              disabledReason={disabledReason}
-              isScanning={isScanning}
-              hasResult={hasResult}
-            />
-          )}
-        </section>
+            {!isDetailsView && (
+              <ScanButton
+                onScan={handleScan}
+                disabled={!isWebsiteAvailable}
+                disabledReason={disabledReason}
+                isScanning={isScanning}
+                hasResult={hasResult}
+              />
+            )}
+          </section>
+        )}
       </main>
 
       <footer className="popup-footer">

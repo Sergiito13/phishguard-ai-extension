@@ -16,13 +16,10 @@ export function LanguageSwitcher() {
   // CURRENT LANGUAGE
   // ==========================================
 
-  const currentCode =
-    i18n.resolvedLanguage?.split('-')[0] ?? 'en';
+  const currentCode = i18n.resolvedLanguage?.split('-')[0] ?? 'en';
 
   const current =
-    SUPPORTED_LANGUAGES.find(
-      (language) => language.code === currentCode,
-    ) ?? SUPPORTED_LANGUAGES[1];
+    SUPPORTED_LANGUAGES.find((language) => language.code === currentCode) ?? SUPPORTED_LANGUAGES[1];
 
   // ==========================================
   // CLOSE DROPDOWN
@@ -32,10 +29,7 @@ export function LanguageSwitcher() {
     if (!open) return;
 
     function handleOutsideClick(event: PointerEvent) {
-      if (
-        rootRef.current &&
-        !rootRef.current.contains(event.target as Node)
-      ) {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     }
@@ -50,10 +44,7 @@ export function LanguageSwitcher() {
     document.addEventListener('keydown', handleEscape);
 
     return () => {
-      document.removeEventListener(
-        'pointerdown',
-        handleOutsideClick,
-      );
+      document.removeEventListener('pointerdown', handleOutsideClick);
       document.removeEventListener('keydown', handleEscape);
     };
   }, [open]);
@@ -84,16 +75,9 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((value) => !value)}
       >
         <span className="language-switcher__flag-wrapper">
-          <img
-            src={current.flag}
-            alt=""
-            className="language-switcher__button-flag"
-          />
+          <img src={current.flag} alt="" className="language-switcher__button-flag" />
 
-          <span
-            className="language-switcher__code"
-            aria-hidden="true"
-          >
+          <span className="language-switcher__code" aria-hidden="true">
             {current.shortName}
           </span>
         </span>
@@ -115,30 +99,18 @@ export function LanguageSwitcher() {
                 type="button"
                 lang={language.code}
                 className={`language-switcher__option${
-                  selected
-                    ? ' language-switcher__option--active'
-                    : ''
+                  selected ? ' language-switcher__option--active' : ''
                 }`}
                 aria-pressed={selected}
                 onClick={() => {
                   void changeLanguage(language.code);
                 }}
               >
-                <img
-                  src={language.flag}
-                  alt=""
-                  className="language-switcher__flag"
-                />
+                <img src={language.flag} alt="" className="language-switcher__flag" />
 
                 <span>{language.name}</span>
 
-                {selected && (
-                  <Check
-                    width={15}
-                    height={15}
-                    strokeWidth={2}
-                  />
-                )}
+                {selected && <Check width={15} height={15} strokeWidth={2} />}
               </button>
             );
           })}

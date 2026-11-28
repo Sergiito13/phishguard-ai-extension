@@ -3,8 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 import { LanguageSwitcher } from './LanguageSwitcher';
 
-export function PopupHeader() {
+interface PopupHeaderProps {
+  isSettingsOpen: boolean;
+  onSettingsClick: () => void;
+}
+
+export function PopupHeader({ isSettingsOpen, onSettingsClick }: PopupHeaderProps) {
   const { t } = useTranslation();
+  const settingsLabel = isSettingsOpen ? t('settings.back') : t('header.settings');
 
   return (
     <header className="popup-header">
@@ -22,9 +28,10 @@ export function PopupHeader() {
         <button
           type="button"
           className="popup-header__settings"
-          aria-label={t('header.settingsSoon')}
-          title={t('header.settingsSoon')}
-          disabled
+          aria-label={settingsLabel}
+          title={settingsLabel}
+          aria-pressed={isSettingsOpen}
+          onClick={onSettingsClick}
         >
           <Settings width={20} height={20} strokeWidth={1.8} />
         </button>

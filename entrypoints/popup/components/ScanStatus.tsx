@@ -8,13 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export type ScanStatusType =
-  | 'loading'
-  | 'idle'
-  | 'scanning'
-  | 'safe'
-  | 'suspicious'
-  | 'error'
-  | 'unavailable';
+  'loading' | 'idle' | 'scanning' | 'safe' | 'suspicious' | 'error' | 'unavailable';
 
 interface ScanStatusProps {
   status: ScanStatusType;
@@ -44,9 +38,7 @@ export function ScanStatus({ status, description }: ScanStatusProps) {
         <span className="scan-status__indicator" />
         <span className="scan-status__title">{t(`status.${status}.title`)}</span>
       </div>
-      <p className="scan-status__description">
-        {description ?? t(`status.${status}.description`)}
-      </p>
+      <p className="scan-status__description">{description ?? t(`status.${status}.description`)}</p>
     </section>
   );
 }

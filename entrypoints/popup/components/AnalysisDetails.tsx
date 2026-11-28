@@ -38,7 +38,13 @@ export function AnalysisDetails({ result, onBack }: AnalysisDetailsProps) {
         </div>
         <div className="analysis-details__row">
           <dt>{t('details.classification')}</dt>
-          <dd>{t(result.prediction === 'potential_phishing' ? 'result.phishingTitle' : 'result.safeTitle')}</dd>
+          <dd>
+            {t(
+              result.prediction === 'potential_phishing'
+                ? 'result.phishingTitle'
+                : 'result.safeTitle',
+            )}
+          </dd>
         </div>
         <div className="analysis-details__row">
           <dt>{t('details.score')}</dt>

@@ -87,8 +87,7 @@
 
   object-fit: cover;
 
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.13);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.13);
 }
 
 /* ==========================================
@@ -131,16 +130,13 @@
    BUTTON STATES
    ========================================== */
 
-.language-switcher__button:hover
-  .language-switcher__flag-wrapper {
+.language-switcher__button:hover .language-switcher__flag-wrapper {
   filter: brightness(1.1);
   transform: translateY(-1px);
 }
 
-.language-switcher__button[aria-expanded='true']
-  .language-switcher__button-flag {
-  box-shadow:
-    0 0 0 1px var(--brand-primary);
+.language-switcher__button[aria-expanded='true'] .language-switcher__button-flag {
+  box-shadow: 0 0 0 1px var(--brand-primary);
 }
 
 /* ==========================================
@@ -165,8 +161,7 @@
 
   background: var(--bg-card);
 
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
 }
 
 /* Small pointer connecting menu to flag */

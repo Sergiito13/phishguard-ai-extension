@@ -28,7 +28,9 @@ export function AnalysisResult({ result, hostname, onShowDetails }: AnalysisResu
     >
       <div className="analysis-result__site">
         <Globe width={17} height={17} strokeWidth={1.8} />
-        <span className="analysis-result__site-name" title={hostname}>{hostname}</span>
+        <span className="analysis-result__site-name" title={hostname}>
+          {hostname}
+        </span>
         <span className="analysis-result__site-tag">{t('result.analyzed')}</span>
       </div>
 
@@ -66,7 +68,12 @@ export function AnalysisResult({ result, hostname, onShowDetails }: AnalysisResu
       </div>
 
       <div className="analysis-result__advice">
-        <InfoCircle width={18} height={18} strokeWidth={1.8} className="analysis-result__advice-icon" />
+        <InfoCircle
+          width={18}
+          height={18}
+          strokeWidth={1.8}
+          className="analysis-result__advice-icon"
+        />
         <div className="analysis-result__advice-content">
           <h3>{t('result.recommendation')}</h3>
           <p>{t(isPhishing ? 'result.phishingAdvice' : 'result.safeAdvice')}</p>
@@ -75,7 +82,9 @@ export function AnalysisResult({ result, hostname, onShowDetails }: AnalysisResu
 
       <button type="button" className="analysis-result__details-button" onClick={onShowDetails}>
         <span>{t('result.detailsLink')}</span>
-        <span className="analysis-result__details-arrow" aria-hidden="true">›</span>
+        <span className="analysis-result__details-arrow" aria-hidden="true">
+          ›
+        </span>
       </button>
     </section>
   );

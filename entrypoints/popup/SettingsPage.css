@@ -1,0 +1,350 @@
+/* PhishGuard AI — Settings V2: compact and intentionally calm. */
+
+/* The existing popup header and footer remain visible while the content scrolls. */
+.popup--settings {
+  max-height: 590px;
+  padding: 12px 16px;
+}
+
+.popup--settings .popup-header {
+  flex-shrink: 0;
+  padding-bottom: 10px;
+}
+
+.popup--settings .popup-header__brand {
+  gap: 3px;
+}
+
+.popup--settings .popup-header__logo {
+  width: 155px;
+}
+
+.popup--settings .popup-header__subtitle {
+  font-size: 10px;
+}
+
+.popup--settings .popup-content {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 11px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(135, 233, 208, 0.22) transparent;
+}
+
+/* Chrome / Edge: narrow track, no Windows-style scrollbar arrows. */
+.popup--settings .popup-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.popup--settings .popup-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.popup--settings .popup-content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(135, 233, 208, 0.22);
+}
+
+.popup--settings .popup-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(135, 233, 208, 0.4);
+}
+
+.popup--settings .popup-content::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.popup--settings .popup-footer {
+  flex-shrink: 0;
+  margin-top: 9px;
+  padding-top: 9px;
+}
+
+.popup-header__settings[aria-pressed='true'] {
+  border-color: var(--border-hover);
+  background: rgba(135, 233, 208, 0.08);
+  color: var(--brand-primary);
+}
+
+.popup-header__settings:not(:disabled) {
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* Content */
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  min-width: 0;
+  padding: 0 4px 2px 0;
+}
+
+/* One-line navigation: avoids an entire extra row and redundant subtitle. */
+.settings-page__top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 29px;
+}
+
+.settings-page__top h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.settings-page__back {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(135, 233, 208, 0.04);
+  color: var(--brand-primary);
+  cursor: pointer;
+}
+
+.settings-page__back span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.settings-page__back:hover {
+  border-color: var(--border-hover);
+  background: rgba(135, 233, 208, 0.09);
+}
+
+.settings-page__section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.settings-page__section-title {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.settings-page__card {
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--glass-background);
+}
+
+/* API health and action share a single row. */
+.settings-page__health {
+  --health-color: var(--status-warning);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.settings-page__health--connected {
+  --health-color: var(--status-safe);
+}
+
+.settings-page__health--disconnected {
+  --health-color: var(--status-danger);
+}
+
+.settings-page__health-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(135, 233, 208, 0.045);
+  color: var(--health-color);
+}
+
+.settings-page__health-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.settings-page__health-text strong {
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.settings-page__health-text span {
+  color: var(--text-muted);
+  font-size: 9.5px;
+}
+
+.settings-page__check-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 30px;
+  padding: 5px 7px;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-sm);
+  background: rgba(135, 233, 208, 0.07);
+  color: var(--brand-primary);
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.settings-page__check-button:hover:not(:disabled) {
+  background: rgba(135, 233, 208, 0.13);
+}
+
+.settings-page__check-button:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+.settings-page__refresh-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Endpoint is read-only and intentionally secondary. */
+.settings-page__endpoint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-default);
+}
+
+.settings-page__endpoint span {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.settings-page__endpoint code {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-primary);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-page__helper {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+/* Privacy */
+.settings-page__privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.settings-page__privacy > svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--brand-primary);
+}
+
+.settings-page__privacy > div {
+  min-width: 0;
+}
+
+.settings-page__privacy strong,
+.settings-page__about strong {
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.settings-page__privacy p,
+.settings-page__about p {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.settings-page__privacy .settings-page__muted {
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+/* About */
+.settings-page__about-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.settings-page__about-heading span {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.settings-page__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 7px;
+  color: var(--brand-primary);
+  font-size: 10.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.settings-page__link:hover {
+  color: var(--brand-light);
+}
+
+.settings-page__back:focus-visible,
+.settings-page__check-button:focus-visible,
+.settings-page__link:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-page__check-button {
+    transition: none;
+  }
+}
