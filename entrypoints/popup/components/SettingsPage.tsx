@@ -24,14 +24,17 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
 
   return (
     <section className="settings-page" aria-labelledby="settings-page-title">
-      <button type="button" className="settings-page__back" onClick={onBack}>
-        <span aria-hidden="true">←</span>
-        {t('settings.back')}
-      </button>
-
-      <div className="settings-page__intro">
+      <div className="settings-page__top">
+        <button
+          type="button"
+          className="settings-page__back"
+          onClick={onBack}
+          aria-label={t('settings.back')}
+          title={t('settings.back')}
+        >
+          <span aria-hidden="true">←</span>
+        </button>
         <h1 id="settings-page-title">{t('settings.title')}</h1>
-        <p>{t('settings.subtitle')}</p>
       </div>
 
       <section className="settings-page__section" aria-labelledby="settings-api-title">
@@ -39,38 +42,34 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
           {t('settings.api.title')}
         </h2>
         <div className="settings-page__card">
-          <div
-            className={`settings-page__health settings-page__health--${state.status}`}
-            role="status"
-            aria-live="polite"
-          >
-            <span className="settings-page__health-icon">
-              <StatusIcon width={19} height={19} strokeWidth={1.8} />
+          <div className={`settings-page__health settings-page__health--${state.status}`}>
+            <span className="settings-page__health-icon" aria-hidden="true">
+              <StatusIcon width={17} height={17} strokeWidth={1.8} />
             </span>
-            <div className="settings-page__health-text">
+            <div className="settings-page__health-text" role="status" aria-live="polite">
               <strong>{t(`settings.api.${state.status}`)}</strong>
               {isConnected && state.version && (
                 <span>{t('settings.api.version', { version: state.version })}</span>
               )}
             </div>
-            <span className="settings-page__health-dot" aria-hidden="true" />
+            <button
+              type="button"
+              className="settings-page__check-button"
+              onClick={() => void checkConnection()}
+              disabled={isChecking}
+              aria-busy={isChecking}
+            >
+              <span className="settings-page__refresh-icon" aria-hidden="true">
+                ↻
+              </span>
+              {t(isChecking ? 'settings.api.checkingButton' : 'settings.api.checkButton')}
+            </button>
           </div>
 
           <div className="settings-page__endpoint">
             <span>{t('settings.api.address')}</span>
             <code title={API_ORIGIN}>{API_ORIGIN}</code>
           </div>
-
-          <button
-            type="button"
-            className="settings-page__check-button"
-            onClick={() => void checkConnection()}
-            disabled={isChecking}
-            aria-busy={isChecking}
-          >
-            <span aria-hidden="true">↻</span>
-            {t(isChecking ? 'settings.api.checkingButton' : 'settings.api.checkButton')}
-          </button>
 
           <p className="settings-page__helper">{t('settings.api.healthNote')}</p>
         </div>
@@ -81,7 +80,7 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
           {t('settings.privacy.title')}
         </h2>
         <div className="settings-page__card settings-page__privacy">
-          <ShieldCheck width={19} height={19} strokeWidth={1.8} aria-hidden="true" />
+          <ShieldCheck width={18} height={18} strokeWidth={1.8} aria-hidden="true" />
           <div>
             <strong>{t('settings.privacy.manualTitle')}</strong>
             <p>{t('settings.privacy.description')}</p>
